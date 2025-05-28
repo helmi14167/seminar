@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCES - About</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #111;
+            border-bottom: 2px solid #333;
+            width: 100%;
+        }
+        .header-title-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: row-reverse; /* Aligns the nav items to the right */
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: #333;
+        }
+        main {
+            background-color: #111;
+            border-radius: 10px;
+            padding: 30px;
+            width: 80%;
+            margin: 30px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            flex-grow: 1; /* Allow main content to grow */
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #111;
+            width: 100%;
+            border-top: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-title-container">
+            <h1 class="header-title">University Council Election System</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.php">Register/Login</a></li>
+                <li><a href="nomination.php">Nomination</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>About the UCES</h2>
+        <p>The University Council Election System (UCES) provides a platform for conducting student council elections in a democratic and orderly manner.</p>
+        <p>This system ensures that all eligible students can participate in the election process, either as voters or candidates.</p>
+    </main>
+    <footer>
+        <p>© 2024 University Council Election System</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCES - Results</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #111;
+            border-bottom: 2px solid #333;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 20px;
+        }
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .candidate {
+            background-color: #111;
+            padding: 10px;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .candidate img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .candidate-name {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        #results-chart {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #111;
+            border-top: 2px solid #333;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>University Council Election System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="nomination.php">Nomination</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Election Results</h2>
+        <div id="results-chart">
+            <canvas id="chart"></canvas>
+        </div>
+        <div class="results-container" id="results-container">
+            <!-- Results will be dynamically inserted here -->
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 University Council Election System</p>
+    </footer>
+
+    <script>
+        async function fetchResults() {
+            try {
+                const response = await fetch('fetch_results.php');
+                const results = await response.json();
+
+                const resultsContainer = document.getElementById('results-container');
+                const chartLabels = [];
+                const chartData = [];
+                resultsContainer.innerHTML = '';
+
+                results.forEach(result => {
+                    const candidateDiv = document.createElement('div');
+                    candidateDiv.className = 'candidate';
+
+                    const img = document.createElement('img');
+                    img.src = 'data:image/jpeg;base64,' + result.photo;
+                    candidateDiv.appendChild(img);
+
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'candidate-name';
+                    nameDiv.textContent = `${result.candidate_name}`;
+                    candidateDiv.appendChild(nameDiv);
+
+                    const votesDiv = document.createElement('div');
+                    votesDiv.textContent = `${result.votes} votes`;
+                    candidateDiv.appendChild(votesDiv);
+
+                    resultsContainer.appendChild(candidateDiv);
+
+                    chartLabels.push(result.candidate_name);
+                    chartData.push(result.votes);
+                });
+
+                renderChart(chartLabels, chartData);
+            } catch (error) {
+                console.error('Error fetching results:', error);
+            }
+        }
+
+        function renderChart(labels, data) {
+            const ctx = document.getElementById('chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Votes',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Fetch results every 10 seconds
+        setInterval(fetchResults, 10000);
+
+        // Initial fetch
+        fetchResults();
+    </script>
+</body>
+</html>
